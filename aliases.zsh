@@ -1,5 +1,6 @@
 
 alias c="clear"
+
 # yarn aliases
 alias y="yarn"
 alias yi="yarn install"
@@ -8,10 +9,19 @@ alias yte="yarn test:e2e"
 alias yti="yarn test:inte"
 alias ys="yarn start"
 
+# npm aliases
+alias n="npm"
+alias nr="npmi run"
+alias nri="npm run install"
+alias nrt="npm run test"
+alias nrte="npm run test:e2e"
+alias nrti="npm run test:inte"
+alias nrs="npm run start"
+
+# Development shortcuts
 alias sano="cd ~/Development/CorpoSano/"
 alias tied="cd ~/Development/TiedSiren/"
 alias giveAccentsBack="defaults write -g ApplePressAndHoldEnabled -bool true"
-alias nrt="npm run test"
 
 #Yann magic aliases
 alias gupm="gup origin master"
@@ -33,7 +43,12 @@ alias adb-back="adb shell input keyevent KEYCODE_BACK"
 
 alias s="speedtest"
 
+# Prettier
 alias np="npm i --save-dev --save-exact prettier"
 alias yp="yarn add --dev --exact prettier"
 
 alias jqscripts="jq '.scripts' package.json"
+
+# source
+alias srczsh="source ~/.zshrc"
+alias srcbash="source ~/.bashrc"

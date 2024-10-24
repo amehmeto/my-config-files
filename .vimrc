@@ -1,5 +1,3 @@
 syntax on
 set number
-set mouse=a
-set autoindent
-
+set laststatus=2
