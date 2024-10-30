@@ -11,12 +11,17 @@ alias ys="yarn start"
 
 # npm aliases
 alias n="npm"
-alias nr="npmi run"
+alias nr="npm run"
 alias nri="npm run install"
 alias nrt="npm run test"
+alias nrtu="npm run test:unit"
 alias nrte="npm run test:e2e"
+alias nrteu="npm run test:e2e:ui"
 alias nrti="npm run test:inte"
+alias nrtc="npm run test:contract"
 alias nrs="npm run start"
+alias nrd="npm run dev"
+alias nrdm="npm run dev:mock"
 
 # Development shortcuts
 alias sano="cd ~/Development/CorpoSano/"
@@ -47,8 +52,8 @@ alias s="speedtest"
 alias np="npm i --save-dev --save-exact prettier"
 alias yp="yarn add --dev --exact prettier"
 
-alias jqscripts="jq '.scripts' package.json"
+alias jqs="jq '.scripts' package.json"
 
 # source
-alias srczsh="source ~/.zshrc"
-alias srcbash="source ~/.bashrc"
+alias srcz="source ~/.zshrc"
+alias srcb="source ~/.bashrc"
