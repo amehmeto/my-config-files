@@ -13,5 +13,10 @@ brew install speedtest --force
 
 # Iterm config
 
-Disable inactive pane dimming
+## Disable inactive pane dimming
 Settings -> Appearance -> Dim
+
+## New tab within current directory
+Click iTerm2 → Preferences → Profiles
+In “Working Directory” section select “Reuse previous session’s directory”
+
