@@ -53,6 +53,8 @@ alias np="npm i --save-dev --save-exact prettier"
 alias yp="yarn add --dev --exact prettier"
 
 alias jqs="jq '.scripts' package.json"
+alias jqd="jq '.dependencies' package.json"
+alias jqdd="jq '.devDependencies' package.json"
 
 # source
 alias srcz="source ~/.zshrc"

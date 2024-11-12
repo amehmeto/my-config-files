@@ -20,3 +20,18 @@ Settings -> Appearance -> Dim
 Click iTerm2 → Preferences → Profiles
 In “Working Directory” section select “Reuse previous session’s directory”
 
+## Silent bell
+Preferences -> Profiles
+Under Terminal tab, you will see Notifications header. Toggle the Silence bell option.
+
+## Disable dimming on command selection
+Preferences > General > Selection
+Uncheck "Clicking on a command selects it to restrict Find and Filter"
+
+## Unlimited scrollback
+Preferences > Profiles > Terminal > Scrollback Buffer
+Check "Unlimited scrollback"
+
+## Open file on WebStorm from iTerm
+Preference > Profiles > Advanced
+Semantic History > Open with editor... > WebStorm
