@@ -33,7 +33,7 @@ alias adb-back="adb shell input keyevent KEYCODE_BACK"
 
 alias s="speedtest"
 
-alias np="npm i --save-dev --save-exact prettier"
-alias yp="yarn add --dev --exact prettier"
+alias np="npm i --save-dev --save-exact prettier && npx prettier . --write"
+alias yp="yarn add --dev --exact prettier && cp ~/Development/zsh-aliases/prettierrc.json && yarn prettier . --write"
 
 alias jqscripts="jq '.scripts' package.json"
