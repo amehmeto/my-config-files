@@ -47,9 +47,14 @@ alias adb-close-notif="adb shell am broadcast -a android.intent.action.CLOSE_SYS
 alias adb-back="adb shell input keyevent KEYCODE_BACK"
 
 alias s="speedtest"
+alias pcat="pygmentize -g -O style=lightbulb"
 
 alias np="npm i --save-dev --save-exact prettier && npx prettier . --write"
 alias yp="yarn add --dev --exact prettier && cp ~/Development/zsh-aliases/prettierrc.json && yarn prettier . --write"
+
+# Prettier
+alias np="npm i --save-dev --save-exact prettier"
+alias yp="yarn add --dev --exact prettier"
 
 alias jqs="jq '.scripts' package.json"
 alias jqd="jq '.dependencies' package.json"

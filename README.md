@@ -11,6 +11,9 @@ brew update
 # brew uninstall speedtest-cli --force
 brew install speedtest --force
 
+
+#######################################
+
 # Iterm config
 
 ## Disable inactive pane dimming
@@ -35,3 +38,10 @@ Check "Unlimited scrollback"
 ## Open file on WebStorm from iTerm
 Preference > Profiles > Advanced
 Semantic History > Open with editor... > WebStorm
+
+## New window openning at max height
+Preference > Profiles > Window
+Set "Style" to "Normal"
+Under "Settings for New Windows", set:
+Column: 80
+Row: 80
