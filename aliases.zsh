@@ -39,6 +39,11 @@ alias vmajor="gco master && gup && npm version major --git-tag-version && ggpush
 alias vminor="gco master && gup && npm version minor --git-tag-version && ggpush && ggpush --tags"
 alias vpatch="gco master && gup && npm version patch --git-tag-version && ggpush && ggpush --tags"
 
+
+# Gitlab aliases
+alias gpcv="glab pipeline ci view"
+alias gpcvw="glab pipeline ci viewi --web"
+
 #adb shortcuts
 alias adb-menu="adb shell input keyevent 82"
 alias adb-unlock="adb shell input keyevent KEYCODE_WAKEUP && adb shell input swipe 500 1500 500 500 && sleep 1 && adb shell input text 5068 && adb shell input keyevent KEYCODE_ENTER"
