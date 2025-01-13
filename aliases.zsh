@@ -20,6 +20,7 @@ alias nrteu="npm run test:e2e:ui"
 alias nrti="npm run test:inte"
 alias nrtc="npm run test:contract"
 alias nrs="npm run start"
+alias nrsd="npm run start:dev"
 alias nrd="npm run dev"
 alias nrdm="npm run dev:mock"
 
@@ -42,7 +43,7 @@ alias vpatch="gco master && gup && npm version patch --git-tag-version && ggpush
 
 # Gitlab aliases
 alias gpcv="glab pipeline ci view"
-alias gpcvw="glab pipeline ci viewi --web"
+alias gpcvw="glab pipeline ci view --web"
 
 #adb shortcuts
 alias adb-menu="adb shell input keyevent 82"
