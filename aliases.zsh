@@ -23,6 +23,12 @@ alias nrs="npm run start"
 alias nrsd="npm run start:dev"
 alias nrd="npm run dev"
 alias nrdm="npm run dev:mock"
+alias nrba="npm run build:all"
+alias nrbc="npm run build:common"
+alias nrbr="npm run build:react"
+alias nrta="npm run test:all"
+alias nrtc="npm run test:common"
+alias nrtr="npm run test:react"
 
 # Development shortcuts
 alias sano="cd ~/Development/CorpoSano/"
@@ -40,6 +46,11 @@ alias vmajor="gco master && gup && npm version major --git-tag-version && ggpush
 alias vminor="gco master && gup && npm version minor --git-tag-version && ggpush && ggpush --tags"
 alias vpatch="gco master && gup && npm version patch --git-tag-version && ggpush && ggpush --tags"
 
+#For Hermes Admin UI
+alias syncui="(cd ~/Development/admin-ui-component && npm run build:all) && cp -rv ~/Development/admin-ui-component/packages/common/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui/ && cp -rv ~/Development/admin-ui-component/packages/ui/react/components-lib/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react/ && rm -rfv ~/Development/admin-ui-customer/node_modules/.vite && touch src/main.tsx"
+alias syncui-common="(cd ~/Development/admin-ui-component && npm run build:all) && cp -rv ~/Development/admin-ui-component/packages/common/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui/ && rm -rfv ~/Development/admin-ui-customer/node_modules/.vite && touch ~/Development/admin-ui-customer/src/env.d.ts"
+alias syncui-react="(cd ~/Development/admin-ui-component && npm run build:all) && cp -rv ~/Development/admin-ui-component/packages/ui/react/components-lib/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react/ && rm -rfv ~/Development/admin-ui-customer/node_modules/.vite && touch src/main.tsx"
+alias revertsync="rm -rf ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react node_modules/.vite && npm install"
 
 # Gitlab aliases
 alias gpcv="glab pipeline ci view"
