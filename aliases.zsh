@@ -80,3 +80,8 @@ alias jqdd="jq '.devDependencies' package.json"
 # source
 alias srcz="source ~/.zshrc"
 alias srcb="source ~/.bashrc"
+
+# Function to git add all, commit with a message, and push
+gacp() {
+  gaa && gcmsg "$1" && gp
+}
