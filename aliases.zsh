@@ -1,4 +1,3 @@
-
 alias c="clear"
 
 # yarn aliases
@@ -17,6 +16,7 @@ alias nrt="npm run test"
 alias nrtu="npm run test:unit"
 alias nrte="npm run test:e2e"
 alias nrteu="npm run test:e2e:ui"
+alias nrtel="npm run test:e2e:local"
 alias nrti="npm run test:inte"
 alias nrtc="npm run test:contract"
 alias nrs="npm run start"
@@ -29,6 +29,7 @@ alias nrbr="npm run build:react"
 alias nrta="npm run test:all"
 alias nrtc="npm run test:common"
 alias nrtr="npm run test:react"
+alias nrlt="npm run lint:types"
 
 # Development shortcuts
 alias sano="cd ~/Development/CorpoSano/"
@@ -94,5 +95,22 @@ gacp() {
       fi
     done
 
-  gst && gaa && gst && gcmsg "$msg"  $noVerify && gp $noVerify
+  gaa && gst && gcmsg "$msg" $noVerify && {
+    # Try normal push first, capture output
+    local push_output
+    push_output=$(gp $noVerify 2>&1)
+    local push_exit_code=$?
+    
+    # If push failed and output contains upstream message, use gpsup
+    if [[ $push_exit_code -ne 0 && $push_output == *"git push --set-upstream"* ]]; then
+      echo "Setting upstream and pushing..."
+      gpsup $noVerify
+    elif [[ $push_exit_code -ne 0 ]]; then
+      # If push failed for other reasons, show the error
+      echo "$push_output"
+      return $push_exit_code
+    fi
+  }
 }
+
+alias gdc="git diff --cached"
