@@ -17,6 +17,7 @@ alias nrt="npm run test"
 alias nrtu="npm run test:unit"
 alias nrte="npm run test:e2e"
 alias nrteu="npm run test:e2e:ui"
+alias nrtel="npm run test:e2e:local"
 alias nrti="npm run test:inte"
 alias nrtc="npm run test:contract"
 alias nrs="npm run start"
@@ -29,10 +30,13 @@ alias nrbr="npm run build:react"
 alias nrta="npm run test:all"
 alias nrtc="npm run test:common"
 alias nrtr="npm run test:react"
+alias nrlt="npm run lint:types"
 
 # Development shortcuts
 alias sano="cd ~/Development/CorpoSano/"
 alias tied="cd ~/Development/TiedSiren/"
+alias acu="cd ~/Development/admin-ui-customer/"
+alias aco="cd ~/Development/admin-ui-component/"
 alias giveAccentsBack="defaults write -g ApplePressAndHoldEnabled -bool true"
 
 #Yann magic aliases
@@ -80,6 +84,8 @@ alias jqdd="jq '.devDependencies' package.json"
 # source
 alias srcz="source ~/.zshrc"
 alias srcb="source ~/.bashrc"
+alias gdc="git diff --cached"
+alias nv="--no-verify"
 
 # Function to git add all, commit with a message, and push
 gacp() {
@@ -94,5 +100,12 @@ gacp() {
       fi
     done
 
-  gst && gaa && gst && gcmsg "$msg"  $noVerify && gp $noVerify
+  gaa && gst && gcmsg "$msg"  $noVerify && {
+    # Check if current branch has upstream, if not use gpsup
+    if git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
+      gp $noVerify
+    else
+      gpsup $noVerify
+    fi
+  }
 }
