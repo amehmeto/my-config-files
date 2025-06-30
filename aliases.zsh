@@ -19,7 +19,6 @@ alias nrte="npm run test:e2e"
 alias nrteu="npm run test:e2e:ui"
 alias nrtel="npm run test:e2e:local"
 alias nrti="npm run test:inte"
-alias nrtc="npm run test:contract"
 alias nrs="npm run start"
 alias nrsd="npm run start:dev"
 alias nrd="npm run dev"
@@ -29,12 +28,15 @@ alias nrbc="npm run build:common"
 alias nrbr="npm run build:react"
 alias nrta="npm run test:all"
 alias nrtc="npm run test:common"
+alias nrtco="npm run test:component"
+alias nrtct="npm run test:contract"
 alias nrtr="npm run test:react"
 alias nrlt="npm run lint:types"
+alias nrtsc="npm run tsc:check"
 
 # Development shortcuts
 alias sano="cd ~/Development/CorpoSano/"
-alias tied="cd ~/Development/TiedSiren/"
+alias tied="cd ~/Development/TiedSiren51/"
 alias acu="cd ~/Development/admin-ui-customer/"
 alias aco="cd ~/Development/admin-ui-component/"
 alias giveAccentsBack="defaults write -g ApplePressAndHoldEnabled -bool true"
@@ -51,14 +53,16 @@ alias vminor="gco master && gup && npm version minor --git-tag-version && ggpush
 alias vpatch="gco master && gup && npm version patch --git-tag-version && ggpush && ggpush --tags"
 
 #For Hermes Admin UI
-alias syncui="(cd ~/Development/admin-ui-component && npm run build:all) && cp -rv ~/Development/admin-ui-component/packages/common/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui/ && cp -rv ~/Development/admin-ui-component/packages/ui/react/components-lib/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react/ && rm -rfv ~/Development/admin-ui-customer/node_modules/.vite && touch src/main.tsx"
+alias syncui="(cd ~/Development/admin-ui-component && npm run build:all) && cp -rv ~/Development/admin-ui-component/packages/common/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui/ && cp -rv ~/Development/admin-ui-component/packages/ui/react/components-lib/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react/ && rm -rfv ~/Development/admin-ui-customer/node_modules/.vite"
 alias syncui-common="(cd ~/Development/admin-ui-component && npm run build:all) && cp -rv ~/Development/admin-ui-component/packages/common/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui/ && rm -rfv ~/Development/admin-ui-customer/node_modules/.vite && touch ~/Development/admin-ui-customer/src/env.d.ts"
 alias syncui-react="(cd ~/Development/admin-ui-component && npm run build:all) && cp -rv ~/Development/admin-ui-component/packages/ui/react/components-lib/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react/ && rm -rfv ~/Development/admin-ui-customer/node_modules/.vite && touch src/main.tsx"
-alias revertsync="rm -rf ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react node_modules/.vite && npm install"
+alias revertsync="rm -rf ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react ~/Development/admin-ui-customer/node_modules/.vite && cd ~/Development/admin-ui-customer && npm ci && echo 'Hermes dependencies and Vite cache cleared. You may need to restart your dev server.'"
+alias sn="syncui && nrteu"
 
 # Gitlab aliases
 alias gpcv="glab pipeline ci view"
 alias gpcvw="glab pipeline ci view --web"
+alias mr="glab mr create --fill --assignee @me --description ''"
 
 #adb shortcuts
 alias adb-menu="adb shell input keyevent 82"
@@ -85,7 +89,7 @@ alias jqdd="jq '.devDependencies' package.json"
 alias srcz="source ~/.zshrc"
 alias srcb="source ~/.bashrc"
 alias gdc="git diff --cached"
-alias nv="--no-verify"
+nv="--no-verify"
 
 # Function to git add all, commit with a message, and push
 gacp() {
@@ -109,3 +113,5 @@ gacp() {
     fi
   }
 }
+
+# Amazon Q CLI aliases removed due to fig not being installed
