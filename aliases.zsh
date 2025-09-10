@@ -28,6 +28,7 @@ alias nrbc="npm run build:common"
 alias nrbr="npm run build:react"
 alias nrta="npm run test:all"
 alias nrtc="npm run test:common"
+alias nrtcaf="npm test -w @hermes-digital/common-ui -- CustomerAddressForm.test"
 alias nrtco="npm run test:component"
 alias nrtct="npm run test:contract"
 alias nrtr="npm run test:react"
@@ -58,11 +59,31 @@ alias syncui-common="(cd ~/Development/admin-ui-component && npm run build:all) 
 alias syncui-react="(cd ~/Development/admin-ui-component && npm run build:all) && cp -rv ~/Development/admin-ui-component/packages/ui/react/components-lib/dist ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react/ && rm -rfv ~/Development/admin-ui-customer/node_modules/.vite && touch src/main.tsx"
 alias revertsync="rm -rf ~/Development/admin-ui-customer/node_modules/@hermes-digital/common-ui ~/Development/admin-ui-customer/node_modules/@hermes-digital/design-system-react ~/Development/admin-ui-customer/node_modules/.vite && cd ~/Development/admin-ui-customer && npm ci && echo 'Hermes dependencies and Vite cache cleared. You may need to restart your dev server.'"
 alias sn="syncui && nrteu"
+alias start-visual='docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.41.1-jammy  /bin/bash'
+alias update-visual="npm ci && npx playwright install && CI=true npm run test:visual:update"
 
 # Gitlab aliases
 alias gpcv="glab pipeline ci view"
 alias gpcvw="glab pipeline ci view --web"
 alias mr="glab mr create --fill --assignee @me --description ''"
+alias grl5="glab release list --per-page 5"
+
+# GitLab alpha release function
+release-a() {
+  if [[ $# -lt 2 ]]; then
+    echo "Usage: release-a <alpha_version> <release_notes>"
+    echo "Example: release-a 5.18.0-alpha.0 'autocomplete with suggested addresses on CustomerAddressForm'"
+    return 1
+  fi
+
+  local version="$1"
+  local notes="$2"
+
+  glab release create "$version" \
+    --name "Release $version" \
+    --notes "$notes" \
+    --ref "$(git rev-parse --abbrev-ref HEAD)"
+}
 
 #adb shortcuts
 alias adb-menu="adb shell input keyevent 82"
