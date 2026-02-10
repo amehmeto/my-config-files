@@ -13,6 +13,7 @@ alias ys="yarn start"
 alias n="npm"
 alias nr="npm run"
 alias nri="npm run install"
+alias nrl="npm run lint"
 alias nrt="npm run test"
 alias nrtu="npm run test:unit"
 alias nrte="npm run test:e2e"
@@ -37,7 +38,7 @@ alias nrtsc="npm run tsc:check"
 
 # Development shortcuts
 alias sano="cd ~/Development/CorpoSano/"
-alias tied="cd ~/Development/TiedSiren51/"
+alias tied="cd ~/Development/tied-siren-project/"
 alias acu="cd ~/Development/admin-ui-customer/"
 alias aco="cd ~/Development/admin-ui-component/"
 alias giveAccentsBack="defaults write -g ApplePressAndHoldEnabled -bool true"
@@ -94,9 +95,6 @@ alias adb-back="adb shell input keyevent KEYCODE_BACK"
 
 alias s="speedtest"
 alias pcat="pygmentize -g -O style=lightbulb"
-
-alias np="npm i --save-dev --save-exact prettier && npx prettier . --write"
-alias yp="yarn add --dev --exact prettier && cp ~/Development/zsh-aliases/prettierrc.json && yarn prettier . --write"
 
 # Prettier
 alias np="npm i --save-dev --save-exact prettier"

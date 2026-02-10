@@ -1,0 +1,19 @@
+[user]
+	email = 42amehmeto@gmail.com
+	name = amehmeto
+[rerere]
+	enabled = true
+[core]
+	excludes = ~/.gitignore_global
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[pull]
+	rebase = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[interactive]
+	diffFilter = diff-so-fancy --patch
+[init]
+	defaultBranch = main

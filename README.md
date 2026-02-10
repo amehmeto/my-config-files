@@ -1,47 +1,63 @@
-# Execute the following to add aliases to .zshrc
+# my-config-files
 
-echo "source $(pwd)/aliases.zsh" >> ~/.zshrc
+One-command setup for a fresh Mac.
 
-# Install speedtest
+## Quick start
 
-brew tap teamookla/speedtest
-brew update
-# Example how to remove conflicting or old versions using brew
-# brew uninstall speedtest --force
-# brew uninstall speedtest-cli --force
-brew install speedtest --force
+```bash
+git clone git@github.com:amehmeto/my-config-files.git ~/Development/my-config-files
+cd ~/Development/my-config-files
+bash install.sh
+```
 
+`install.sh` will:
+1. Install **Homebrew** (if missing)
+2. Run `brew bundle` with the Brewfile (CLI tools, casks, taps)
+3. Install **Oh My Zsh** (if missing)
+4. Symlink dotfiles to `~`
+5. Optionally apply macOS preferences (`macos/defaults.sh`)
 
-#######################################
+## What gets symlinked
 
-# Iterm config
+| Source | Target |
+|---|---|
+| `zsh/.zshrc` | `~/.zshrc` |
+| `git/.gitconfig` | `~/.gitconfig` |
+| `git/.gitignore_global` | `~/.gitignore_global` |
+| `vim/.vimrc` | `~/.vimrc` |
+| `vim/.ideavimrc` | `~/.ideavimrc` |
+| `prettier/.prettierrc` | `~/.prettierrc` |
 
-## Disable inactive pane dimming
-Settings -> Appearance -> Dim
+## Repo structure
 
-## New tab within current directory
-Click iTerm2 → Preferences → Profiles
-In “Working Directory” section select “Reuse previous session’s directory”
+```
+zsh/            Shell config — .zshrc, aliases, iTerm colors
+git/            Git config and global gitignore
+vim/            Vim and IdeaVim config
+prettier/       Prettier config
+macos/          macOS system preferences script
+Brewfile        Homebrew packages and casks
+install.sh      Bootstrap script
+```
 
-## Silent bell
-Preferences -> Profiles
-Under Terminal tab, you will see Notifications header. Toggle the Silence bell option.
+## Manual steps after install
 
-## Disable dimming on command selection
-Preferences > General > Selection
-Uncheck "Clicking on a command selects it to restrict Find and Filter"
+### iTerm2
+- **Disable inactive pane dimming:** Settings > Appearance > Dim
+- **Reuse directory for new tabs:** Preferences > Profiles > Working Directory > "Reuse previous session's directory"
+- **Silent bell:** Preferences > Profiles > Terminal > Silence bell
+- **Disable dimming on command selection:** Preferences > General > Selection > uncheck "Clicking on a command selects it"
+- **Unlimited scrollback:** Preferences > Profiles > Terminal > check "Unlimited scrollback"
+- **Open files in WebStorm:** Preferences > Profiles > Advanced > Semantic History > WebStorm
+- **Window size:** Preferences > Profiles > Window > Columns: 80, Rows: 80
 
-## Unlimited scrollback
-Preferences > Profiles > Terminal > Scrollback Buffer
-Check "Unlimited scrollback"
+### Git credentials
+```bash
+gh auth login
+```
 
-## Open file on WebStorm from iTerm
-Preference > Profiles > Advanced
-Semantic History > Open with editor... > WebStorm
-
-## New window openning at max height
-Preference > Profiles > Window
-Set "Style" to "Normal"
-Under "Settings for New Windows", set:
-Column: 80
-Row: 80
+### Apps not in Homebrew
+- [Hotspot Shield](https://www.hotspotshield.com/)
+- [Joy](https://getjoy.app/)
+- [Pop](https://pop.com/)
+- [ScreenBrush](https://screenbrush.app/)
