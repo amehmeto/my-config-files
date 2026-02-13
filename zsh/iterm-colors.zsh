@@ -1,7 +1,8 @@
 # iTerm2 tab color randomizer
-# Picks a random color from predefined list, avoiding repeats
+# Picks a random color ensuring visual distinction from the last 3 used
+# Usage: `rc` to re-roll the tab color on the fly
 
-colors=(
+_iterm_colors=(
   "150;90;90"    # coral
   "80;120;85"    # green
   "70;100;145"   # blue
@@ -34,19 +35,64 @@ colors=(
   "140;120;110"  # beige
 )
 
-last_color_file="$HOME/.iterm_last_color"
-last_index=-1
-[[ -f "$last_color_file" ]] && last_index=$(<"$last_color_file")
+_iterm_history_file="$HOME/.iterm_color_history"
 
-# Pick a random index different from last
-new_index=$((RANDOM % ${#colors[@]}))
-while [[ $new_index -eq $last_index ]]; do
-  new_index=$((RANDOM % ${#colors[@]}))
-done
-echo "$new_index" > "$last_color_file"
+# Minimum squared RGB distance to consider two colors "distinct"
+# ~60 in Euclidean RGB space — filters out close pairs like coral/salmon
+_iterm_min_dist_sq=3600
 
-picked=${colors[$new_index]}
-IFS=';' read -r r g b <<< "$picked"
-echo -e "\033]6;1;bg;red;brightness;$r\a"
-echo -e "\033]6;1;bg;green;brightness;$g\a"
-echo -e "\033]6;1;bg;blue;brightness;$b\a"
+recolor() {
+  local -a recent=() candidates=()
+  local cr cg cb pr pg pb dr dg db distinct
+  local i pick picked tmp r g b
+
+  # Load recent colors from history
+  if [[ -f "$_iterm_history_file" ]]; then
+    while IFS= read -r line; do
+      [[ -n "$line" ]] && recent+=("$line")
+    done < "$_iterm_history_file"
+  fi
+
+  # Build list of candidate indices that are distinct from all recent colors
+  for (( i = 1; i <= ${#_iterm_colors[@]}; i++ )); do
+    distinct=1
+    IFS=';' read -r cr cg cb <<< "${_iterm_colors[$i]}"
+    for past in "${recent[@]}"; do
+      IFS=';' read -r pr pg pb <<< "$past"
+      dr=$((cr - pr)) dg=$((cg - pg)) db=$((cb - pb))
+      if (( dr * dr + dg * dg + db * db < _iterm_min_dist_sq )); then
+        distinct=0
+        break
+      fi
+    done
+    (( distinct )) && candidates+=($i)
+  done
+
+  # Fallback: if too few distinct candidates, use the full palette
+  if (( ${#candidates[@]} < 5 )); then
+    candidates=()
+    for (( i = 1; i <= ${#_iterm_colors[@]}; i++ )); do
+      candidates+=($i)
+    done
+  fi
+
+  # Pick random from candidates
+  pick=${candidates[$((RANDOM % ${#candidates[@]} + 1))]}
+  picked=${_iterm_colors[$pick]}
+
+  # Append to history and keep only the last 3
+  echo "$picked" >> "$_iterm_history_file"
+  tmp=$(tail -n 3 "$_iterm_history_file")
+  echo "$tmp" > "$_iterm_history_file"
+
+  # Apply color to iTerm2 tab
+  IFS=';' read -r r g b <<< "$picked"
+  printf "\033]6;1;bg;red;brightness;%s\a" "$r"
+  printf "\033]6;1;bg;green;brightness;%s\a" "$g"
+  printf "\033]6;1;bg;blue;brightness;%s\a" "$b"
+}
+
+alias rc='recolor'
+
+# Set tab color on shell startup
+recolor

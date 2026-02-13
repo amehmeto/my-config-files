@@ -1,6 +1,9 @@
 
 alias c="clear"
 
+# Claude Code
+alias cla="claude"
+
 # yarn aliases
 alias y="yarn"
 alias yi="yarn install"
