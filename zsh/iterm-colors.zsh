@@ -77,6 +77,9 @@ recolor() {
   fi
 
   # Pick random from candidates
+  if (( ${#candidates[@]} == 0 )); then
+    return 1
+  fi
   pick=${candidates[$((RANDOM % ${#candidates[@]} + 1))]}
   picked=${_iterm_colors[$pick]}
 
