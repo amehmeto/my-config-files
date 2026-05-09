@@ -2,7 +2,8 @@
 alias c="clear"
 
 # Claude Code
-alias cla="claude"
+alias cl="claude"
+alias clw="claude -w"
 
 # yarn aliases
 alias y="yarn"
@@ -41,6 +42,7 @@ alias nrtsc="npm run tsc:check"
 
 # Development shortcuts
 alias sano="cd ~/Development/CorpoSano/"
+alias ti="cd ~/Development/tied-siren-project/"
 alias tied="cd ~/Development/tied-siren-project/"
 alias acu="cd ~/Development/admin-ui-customer/"
 alias aco="cd ~/Development/admin-ui-component/"

@@ -67,6 +67,12 @@ symlink "$DOTFILES/vim/.vimrc"            "$HOME/.vimrc"
 symlink "$DOTFILES/vim/.ideavimrc"        "$HOME/.ideavimrc"
 symlink "$DOTFILES/prettier/.prettierrc"  "$HOME/.prettierrc"
 
+# Claude Code
+mkdir -p "$HOME/.claude"
+symlink "$DOTFILES/claude/settings.json"  "$HOME/.claude/settings.json"
+symlink "$DOTFILES/claude/commands"       "$HOME/.claude/commands"
+symlink "$DOTFILES/claude/hooks"          "$HOME/.claude/hooks"
+
 # ---------------------------------------------------------------------------
 # 5. macOS defaults (optional)
 # ---------------------------------------------------------------------------
@@ -88,4 +94,7 @@ echo "Next steps:"
 echo "  1. Open a new terminal tab to load the new .zshrc"
 echo "  2. Configure iTerm2 manually (see README.md)"
 echo "  3. Set up Git credential helper:  gh auth login"
+echo "  4. Sign in to App Store, then re-run:  brew bundle --file=$DOTFILES/Brewfile"
+echo "  5. Copy ~/.zshrc.local from old machine (NPM_TOKEN, secrets)"
+echo "  6. Install fnm node versions:  fnm install 22 && fnm install 20 && fnm default 22"
 echo ""

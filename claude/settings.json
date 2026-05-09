@@ -1,0 +1,63 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/arthurmehmetoglu/.claude/plugins/cache/claude-code-plugins/ralph-wiggum/1.0.0/scripts/setup-ralph-loop.sh:*)",
+      "Bash(\"/Users/arthurmehmetoglu/.claude/plugins/cache/claude-code-plugins/ralph-wiggum/1.0.0/scripts/setup-ralph-loop.sh\":*)"
+    ],
+    "deny": [
+      "Bash(rm :*)",
+      "Bash(rmdir :*)"
+    ],
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/arthurmehmetoglu/.claude/hooks/track-cwd.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__plugin_firebase_firebase__firebase_*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/arthurmehmetoglu/.claude/hooks/cleanup-firebase-log.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/arthurmehmetoglu/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "ralph-wiggum@claude-code-plugins": true,
+    "swift-lsp@claude-plugins-official": true,
+    "firebase@firebase": true,
+    "slack@claude-plugins-official": true,
+    "regex-permissions@amehmeto-regex-permissions": true
+  },
+  "extraKnownMarketplaces": {
+    "amehmeto-regex-permissions": {
+      "source": {
+        "source": "github",
+        "repo": "amehmeto/regex-permissions"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "theme": "light",
+  "remoteControlAtStartup": true,
+  "voiceEnabled": true,
+  "skipAutoPermissionPrompt": true
+}

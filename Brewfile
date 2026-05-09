@@ -27,6 +27,7 @@ brew "grep"
 brew "jq"
 brew "shellcheck"
 brew "telnet"
+brew "mas"                                                                # Mac App Store CLI
 
 # -----------------------------------------------------------------------------
 # CLI — Languages & runtimes
@@ -101,6 +102,7 @@ cask "opera-gx"
 # -----------------------------------------------------------------------------
 cask "iterm2"
 cask "warp"
+cask "ghostty"
 cask "docker"
 cask "android-studio"
 cask "android-platform-tools"
@@ -187,12 +189,22 @@ cask "superwhisper"                                                       # voic
 cask "anki"                                                               # flashcards / spaced repetition
 cask "balsamiq-wireframes"                                                # wireframing / mockups
 cask "timing"                                                             # automatic time tracker
+cask "obsidian"                                                           # note-taking / coaching vault
+cask "figma"                                                              # design
 
 # -----------------------------------------------------------------------------
-# Not available via Homebrew — install manually
+# Mac App Store apps (require `mas` CLI; sign in to App Store first)
 # -----------------------------------------------------------------------------
-# - Hotspot Shield   https://www.hotspotshield.com/
-# - IceBar            (menu bar utility)
-# - Joy              https://getjoy.app/
+mas "Xcode",          id: 497799835
+mas "DigiDoc4",       id: 1370791134
+mas "Hotspot Shield", id: 771076721
+mas "Joy",            id: 6447106829
+mas "ScreenBrush",    id: 1233965871
+mas "Spark",          id: 1176895641
+mas "Spark Desktop",  id: 6445813049
+
+# -----------------------------------------------------------------------------
+# Not available via Homebrew or Mac App Store — install manually
+# -----------------------------------------------------------------------------
+# - IceBar           (menu bar utility)
 # - Pop              https://pop.com/
-# - ScreenBrush      https://screenbrush.app/

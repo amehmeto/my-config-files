@@ -49,7 +49,18 @@ export ANDROID_NDK_HOME="$HOME/Development/Android/AndroidNDK11579264.app"
 export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH"
 
 # ---------------------------------------------------------------------------
+# Firebase CLI: write debug log to /tmp instead of current directory
+# ---------------------------------------------------------------------------
+export FIREBASE_CLI_LOG_FILE=/tmp/firebase-debug.log
+
+# ---------------------------------------------------------------------------
 # Source config files
 # ---------------------------------------------------------------------------
 source "$DOTFILES/zsh/aliases.zsh"
 source "$DOTFILES/zsh/iterm-colors.zsh"
+
+# ---------------------------------------------------------------------------
+# Local secrets / machine-specific overrides (not versioned)
+# Put NPM_TOKEN, API keys, work-only env vars here.
+# ---------------------------------------------------------------------------
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

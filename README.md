@@ -27,6 +27,9 @@ bash install.sh
 | `vim/.vimrc` | `~/.vimrc` |
 | `vim/.ideavimrc` | `~/.ideavimrc` |
 | `prettier/.prettierrc` | `~/.prettierrc` |
+| `claude/settings.json` | `~/.claude/settings.json` |
+| `claude/commands/` | `~/.claude/commands/` |
+| `claude/hooks/` | `~/.claude/hooks/` |
 
 ## Repo structure
 
@@ -56,8 +59,29 @@ install.sh      Bootstrap script
 gh auth login
 ```
 
-### Apps not in Homebrew
-- [Hotspot Shield](https://www.hotspotshield.com/)
-- [Joy](https://getjoy.app/)
+### Local secrets (`~/.zshrc.local`)
+The repo's `.zshrc` sources `~/.zshrc.local` if it exists. Put machine-specific
+secrets there (NPM_TOKEN, API keys, work env vars). Copy this file manually
+from the old machine — it is **not** versioned.
+
+### Mac App Store apps
+The Brewfile uses `mas` for App Store apps. You must sign in to the App Store
+**before** running `brew bundle`, otherwise mas entries will fail. After signing
+in, re-run:
+```bash
+brew bundle --file=~/Development/my-config-files/Brewfile
+```
+
+### Apps not in Homebrew or App Store
 - [Pop](https://pop.com/)
-- [ScreenBrush](https://screenbrush.app/)
+- IceBar (menu bar utility)
+
+### What to migrate manually (NOT in repo)
+- `~/.ssh/` — SSH keys (transfer via AirDrop or USB, never git)
+- `~/.aws/` — AWS credentials and SSO config
+- `~/Documents/Obsidian Vault/` — coaching vault
+- `~/Library/LaunchAgents/com.arthurmehmetoglu.daily-coach.plist` — daily coach launchd job
+- `~/bin/` — personal scripts
+- `/etc/hosts` custom entries (kubernetes.docker.internal, etc.)
+- fnm node versions: `fnm install 22 && fnm install 20 && fnm default 22`
+- npm globals: `npm i -g eas-cli firebase-tools vercel happy-coder`
