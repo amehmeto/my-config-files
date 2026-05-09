@@ -5,7 +5,9 @@ One-command setup for a fresh Mac.
 ## Quick start
 
 ```bash
-git clone git@github.com:amehmeto/my-config-files.git ~/Development/my-config-files
+# HTTPS clone — works on a fresh Mac without an SSH key.
+# Switch the remote to SSH later: git remote set-url origin git@github.com:amehmeto/my-config-files.git
+git clone https://github.com/amehmeto/my-config-files.git ~/Development/my-config-files
 cd ~/Development/my-config-files
 bash install.sh
 ```

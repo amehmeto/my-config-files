@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Bootstrap a fresh Mac from this repo.
-# Usage: git clone <repo> ~/Development/my-config-files && cd ~/Development/my-config-files && bash install.sh
+# Usage (fresh machine — no SSH key yet, use HTTPS):
+#   git clone https://github.com/amehmeto/my-config-files.git ~/Development/my-config-files
+#   cd ~/Development/my-config-files && bash install.sh
 
 set -euo pipefail
 

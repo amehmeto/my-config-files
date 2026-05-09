@@ -180,6 +180,7 @@ cask "webex"
 # Casks — AI
 # -----------------------------------------------------------------------------
 cask "claude"
+cask "claude-code"                                                        # Claude Code CLI
 cask "mindmac"                                                            # multi-model AI client
 cask "superwhisper"                                                       # voice-to-text AI
 
