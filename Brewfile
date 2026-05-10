@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 # Taps
 # -----------------------------------------------------------------------------
-tap "homebrew/services"
+# homebrew/services tap was deprecated and removed (services are now built into core brew)
 tap "jondot/tap"                                                          # hygen
 tap "mobile-dev-inc/tap"                                                  # maestro
 tap "teamookla/speedtest"
@@ -49,7 +49,7 @@ brew "cocoapods"
 # -----------------------------------------------------------------------------
 brew "awscli"
 brew "kubernetes-cli"
-brew "helm@2"
+brew "helm"                                                               # was helm@2 — Helm 2 is EOL and was removed from Homebrew
 brew "kustomize"
 brew "kubeseal"
 brew "skaffold"
@@ -60,7 +60,7 @@ brew "skaffold"
 brew "ffmpeg"
 brew "imagemagick"
 brew "chafa"                                                              # terminal image viewer
-brew "youtube-dl"
+brew "yt-dlp"                                                             # was youtube-dl — that formula was removed from Homebrew (project unmaintained); yt-dlp is the active fork
 brew "qpdf"
 
 # -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ cask "jetbrains-toolbox"
 cask "github"                                                             # GitHub Desktop
 cask "postman"
 cask "insomnia"
-cask "dash"                                                               # API documentation browser
+cask "homebrew/cask/dash"                                                 # API documentation browser (FQN avoids dash/dash-shell formula name collision)
 cask "electron-fiddle"
 cask "pieces"                                                             # code snippet manager
 cask "pieces-os"                                                          # Pieces local engine
@@ -129,14 +129,14 @@ cask "mongodb-compass"
 cask "raycast"
 cask "alfred"
 cask "notion"
-cask "todoist"
+cask "todoist-app"                                                        # was todoist — renamed upstream
 cask "slack"
 cask "discord"
 cask "signal"
 cask "whatsapp"
 cask "miro"
 cask "readdle-spark"                                                      # Spark email client
-cask "microsoft-teams@classic"
+cask "microsoft-teams"                                                    # was microsoft-teams@classic — that cask's pkg URL 404s
 cask "microsoft-word"
 cask "tandem"                                                             # virtual office
 
@@ -146,7 +146,7 @@ cask "tandem"                                                             # virt
 cask "alt-tab"                                                            # Windows-style alt-tab
 cask "jordanbaird-ice"                                                    # menu bar manager
 cask "copyq"                                                              # clipboard manager
-cask "flux"                                                               # night shift / blue light
+cask "flux-app"                                                           # was flux — renamed upstream; night shift / blue light
 cask "couleurs"                                                           # color picker
 cask "menumeters"                                                         # system monitor in menu bar
 cask "cold-turkey-blocker"                                                # website/app blocker
@@ -199,7 +199,7 @@ cask "figma"                                                              # desi
 mas "Xcode",          id: 497799835
 mas "DigiDoc4",       id: 1370791134
 mas "Hotspot Shield", id: 771076721
-mas "Joy",            id: 6447106829
+# mas "Joy",          id: 6447106829   # removed: "No apps found in the App Store for ADAM ID 6447106829" — app pulled from store
 mas "ScreenBrush",    id: 1233965871
 mas "Spark",          id: 1176895641
 mas "Spark Desktop",  id: 6445813049
