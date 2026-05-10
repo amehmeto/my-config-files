@@ -17,3 +17,7 @@
 	diffFilter = diff-so-fancy --patch
 [init]
 	defaultBranch = main
+[include]
+	# Machine-specific config (credential helpers, work email, etc.).
+	# Not versioned — see README "Local secrets" section.
+	path = ~/.gitconfig.local

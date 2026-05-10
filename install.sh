@@ -43,6 +43,11 @@ else
   # doesn't apply (timestamp_type=tty). To prompt the user only ONCE, the
   # askpass helper itself caches the password in a 0600 tmp file after the
   # first call and reuses it for every subsequent invocation.
+  #
+  # SECURITY NOTE: the cached password sits on disk (mode 0600 in $TMPDIR,
+  # typically /var/folders/...) for the duration of brew bundle. The EXIT
+  # trap below wipes and unlinks it. SIGKILL bypasses the trap, so an `kill
+  # -9` of install.sh would leave the file behind until /tmp is reaped.
   PW_FILE="$(mktemp -t install-sh-pw.XXXXXX)"
   chmod 600 "$PW_FILE"
   ASKPASS="$(mktemp -t install-sh-askpass.XXXXXX)"
@@ -68,8 +73,9 @@ end tell
 APPLESCRIPT
 )
 [[ -z "\$pw" ]] && exit 1
-printf '%s' "\$pw" > "\$PW_FILE"
-printf '%s' "\$pw"
+# sudo's askpass protocol expects a newline-terminated password.
+printf '%s\n' "\$pw" > "\$PW_FILE"
+printf '%s\n' "\$pw"
 ASKPASS_EOF
   chmod +x "$ASKPASS"
   export SUDO_ASKPASS="$ASKPASS"

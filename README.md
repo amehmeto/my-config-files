@@ -15,9 +15,15 @@ bash install.sh
 `install.sh` will:
 1. Install **Homebrew** (if missing)
 2. Run `brew bundle` with the Brewfile (CLI tools, casks, taps)
+   - Pops a single password dialog up front and caches it for casks that
+     need `sudo` (Docker, Opera GX, `.pkg` installers).
+   - If the Brewfile has `mas` entries and you're not signed into the App
+     Store, opens the App Store and waits for you to sign in (or click Skip).
 3. Install **Oh My Zsh** (if missing)
 4. Symlink dotfiles to `~`
-5. Optionally apply macOS preferences (`macos/defaults.sh`)
+5. Apply macOS preferences (`macos/defaults.sh`)
+
+No flags. Just `bash install.sh`.
 
 ## What gets symlinked
 
@@ -57,9 +63,27 @@ install.sh      Bootstrap script
 - **Window size:** Preferences > Profiles > Window > Columns: 80, Rows: 80
 
 ### Git credentials
+`gh` is installed by the Brewfile. Authenticate it once after the install:
 ```bash
 gh auth login
 ```
+Then add the credential helper to `~/.gitconfig.local` (NOT `~/.gitconfig` — that's
+a symlink into the repo, so writing helpers there would version a machine-specific
+homebrew path):
+```bash
+GH=$(command -v gh)
+cat >> ~/.gitconfig.local <<EOF
+[credential "https://github.com"]
+	helper =
+	helper = !$GH auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !$GH auth git-credential
+EOF
+chmod 600 ~/.gitconfig.local
+```
+The repo's `.gitconfig` `[include]`s `~/.gitconfig.local` so these helpers
+take effect automatically.
 
 ### Local secrets (`~/.zshrc.local`)
 The repo's `.zshrc` sources `~/.zshrc.local` if it exists. Put machine-specific
@@ -67,9 +91,9 @@ secrets there (NPM_TOKEN, API keys, work env vars). Copy this file manually
 from the old machine — it is **not** versioned.
 
 ### Mac App Store apps
-The Brewfile uses `mas` for App Store apps. You must sign in to the App Store
-**before** running `brew bundle`, otherwise mas entries will fail. After signing
-in, re-run:
+`install.sh` now opens the App Store and prompts you to sign in before
+`brew bundle` reaches the `mas` entries. If you click **Skip** in that dialog,
+sign in later and re-run:
 ```bash
 brew bundle --file=~/Development/my-config-files/Brewfile
 ```
