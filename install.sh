@@ -59,6 +59,19 @@ if (( SKIP_BREW )); then
 elif [[ ! -f "$DOTFILES/Brewfile" ]]; then
   warn "No Brewfile found at $DOTFILES/Brewfile — skipping bundle"
 else
+  # Cache sudo credentials up front: many casks (docker, opera-gx, *.pkg installers)
+  # invoke `sudo` mid-install and will fail silently in a non-TTY shell otherwise.
+  # Keep sudo alive in the background until brew bundle finishes.
+  if [[ -t 0 ]]; then
+    info "Caching sudo credentials for cask installers..."
+    sudo -v
+    ( while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done ) &
+    SUDO_KEEPALIVE_PID=$!
+    trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true' EXIT
+  else
+    warn "Non-interactive shell — skipping sudo cache. Casks needing sudo (docker, opera-gx, .pkg installers) may fail."
+  fi
+
   info "Installing Homebrew packages (this may take a while)..."
   if ! brew bundle --file="$DOTFILES/Brewfile"; then
     warn "Some Brewfile entries failed — check output above (App Store apps need 'mas' sign-in)"
