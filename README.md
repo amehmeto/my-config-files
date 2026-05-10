@@ -38,6 +38,7 @@ No flags. Just `bash install.sh`.
 | `claude/settings.json` | `~/.claude/settings.json` |
 | `claude/commands/` | `~/.claude/commands/` |
 | `claude/hooks/` | `~/.claude/hooks/` |
+| `tools/*` | `~/bin/*` |
 
 ## Repo structure
 
@@ -104,10 +105,5 @@ brew bundle --file=~/Development/my-config-files/Brewfile
 
 ### What to migrate manually (NOT in repo)
 - `~/.ssh/` — SSH keys (transfer via AirDrop or USB, never git)
-- `~/.aws/` — AWS credentials and SSO config
-- `~/Documents/Obsidian Vault/` — coaching vault
-- `~/Library/LaunchAgents/com.arthurmehmetoglu.daily-coach.plist` — daily coach launchd job
-- `~/bin/` — personal scripts
-- `/etc/hosts` custom entries (kubernetes.docker.internal, etc.)
 - fnm node versions: `fnm install 22 && fnm install 20 && fnm default 22`
 - npm globals: `npm i -g eas-cli firebase-tools vercel happy-coder`

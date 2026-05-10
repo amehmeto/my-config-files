@@ -195,6 +195,12 @@ symlink "$DOTFILES/claude/settings.json"  "$HOME/.claude/settings.json"
 symlink "$DOTFILES/claude/commands"       "$HOME/.claude/commands"
 symlink "$DOTFILES/claude/hooks"          "$HOME/.claude/hooks"
 
+# Personal scripts (~/bin)
+mkdir -p "$HOME/bin"
+for tool in "$DOTFILES/tools"/*; do
+  [[ -f "$tool" ]] && symlink "$tool" "$HOME/bin/$(basename "$tool")"
+done
+
 # ---------------------------------------------------------------------------
 # 5. macOS defaults
 # ---------------------------------------------------------------------------

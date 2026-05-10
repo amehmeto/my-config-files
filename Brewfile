@@ -101,7 +101,6 @@ cask "opera-gx"
 # Casks — Development tools
 # -----------------------------------------------------------------------------
 cask "iterm2"
-cask "warp"
 cask "ghostty"
 cask "docker"
 cask "android-studio"
@@ -127,7 +126,6 @@ cask "mongodb-compass"
 # Casks — Productivity
 # -----------------------------------------------------------------------------
 cask "raycast"
-cask "alfred"
 cask "notion"
 cask "todoist-app"                                                        # was todoist — renamed upstream
 cask "slack"
