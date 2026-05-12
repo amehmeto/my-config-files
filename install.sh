@@ -210,6 +210,13 @@ if [[ -d /Applications/iTerm.app ]] || [[ -d "$HOME/Applications/iTerm.app" ]]; 
   ok "iTerm2 will load preferences from $DOTFILES/iterm2"
 fi
 
+# Raycast: opens the .rayconfig so user can click Import in Raycast
+# (Raycast does not expose a CLI import — must go through the UI dialog)
+if [[ -d /Applications/Raycast.app ]] && [[ -f "$DOTFILES/raycast/raycast-config.rayconfig" ]]; then
+  info "Opening Raycast config — click 'Import' in the Raycast dialog when it appears"
+  open "$DOTFILES/raycast/raycast-config.rayconfig" || true
+fi
+
 # ---------------------------------------------------------------------------
 # 5. macOS defaults
 # ---------------------------------------------------------------------------
