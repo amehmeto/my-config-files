@@ -201,6 +201,15 @@ for tool in "$DOTFILES/tools"/*; do
   [[ -f "$tool" ]] && symlink "$tool" "$HOME/bin/$(basename "$tool")"
 done
 
+# iTerm2: load preferences from versioned folder (instead of ~/Library/Preferences)
+# Setting this before iTerm2's first launch ensures it picks up the versioned config.
+if [[ -d /Applications/iTerm.app ]] || [[ -d "$HOME/Applications/iTerm.app" ]]; then
+  defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$DOTFILES/iterm2"
+  defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+  defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesCopyToFolder -bool true
+  ok "iTerm2 will load preferences from $DOTFILES/iterm2"
+fi
+
 # ---------------------------------------------------------------------------
 # 5. macOS defaults
 # ---------------------------------------------------------------------------
