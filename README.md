@@ -40,6 +40,7 @@ No flags. Just `bash install.sh`.
 | `claude/hooks/` | `~/.claude/hooks/` |
 | `tools/*` | `~/bin/*` |
 | `iterm2/com.googlecode.iterm2.plist` | iTerm2 reads it via `LoadPrefsFromCustomFolder` |
+| `raycast/raycast-config.rayconfig` | Auto-opened on M5 — click Import in Raycast dialog |
 
 ## Repo structure
 
