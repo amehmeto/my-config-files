@@ -201,13 +201,25 @@ for tool in "$DOTFILES/tools"/*; do
   [[ -f "$tool" ]] && symlink "$tool" "$HOME/bin/$(basename "$tool")"
 done
 
-# iTerm2: load preferences from versioned folder (instead of ~/Library/Preferences)
-# Setting this before iTerm2's first launch ensures it picks up the versioned config.
+# iTerm2: load preferences from versioned folder (instead of ~/Library/Preferences).
+# If iTerm2 is already running, it will rewrite its in-memory prefs on quit and
+# clobber our `defaults write` — so we quit it first, flush cfprefsd, then write.
 if [[ -d /Applications/iTerm.app ]] || [[ -d "$HOME/Applications/iTerm.app" ]]; then
+  iterm_was_running=0
+  if [[ "${TERM_PROGRAM:-}" == "iTerm.app" ]]; then
+    warn "install.sh is running inside iTerm2 — defaults applied, but quit iTerm2 fully and relaunch from Finder/Spotlight for them to take effect."
+  elif pgrep -x iTerm2 &>/dev/null; then
+    info "Quitting iTerm2 so defaults stick..."
+    osascript -e 'tell application "iTerm" to quit' 2>/dev/null || true
+    sleep 2
+    iterm_was_running=1
+  fi
+  killall cfprefsd 2>/dev/null || true
   defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$DOTFILES/iterm2"
   defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
   defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesCopyToFolder -bool true
   ok "iTerm2 will load preferences from $DOTFILES/iterm2"
+  [[ $iterm_was_running -eq 1 ]] && open -a iTerm
 fi
 
 # Raycast: opens the .rayconfig so user can click Import in Raycast
@@ -229,7 +241,27 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# 6. Summary
+# 6. fnm: install default Node versions
+# ---------------------------------------------------------------------------
+if command -v fnm &>/dev/null; then
+  info "Installing Node versions via fnm (22, 20)..."
+  fnm install 22 || warn "fnm install 22 failed"
+  fnm install 20 || warn "fnm install 20 failed"
+  fnm default 22 || warn "fnm default 22 failed"
+  ok "Node versions installed (default: 22)"
+fi
+
+# ---------------------------------------------------------------------------
+# 7. GitHub CLI authentication
+# ---------------------------------------------------------------------------
+if command -v gh &>/dev/null && ! gh auth status &>/dev/null; then
+  info "GitHub CLI not authenticated — launching interactive login..."
+  warn "Follow the prompts (HTTPS + browser auth recommended)"
+  gh auth login || warn "gh auth login skipped/failed — run it manually later"
+fi
+
+# ---------------------------------------------------------------------------
+# 8. Summary
 # ---------------------------------------------------------------------------
 echo ""
 echo "============================================"
@@ -238,8 +270,5 @@ echo "============================================"
 echo ""
 echo "Next steps:"
 echo "  1. Open a new terminal tab to load the new .zshrc"
-echo "  2. Configure iTerm2 manually (see README.md)"
-echo "  3. Set up Git credential helper:  gh auth login"
-echo "  4. Copy ~/.zshrc.local from old machine (NPM_TOKEN, secrets)"
-echo "  5. Install fnm node versions:  fnm install 22 && fnm install 20 && fnm default 22"
+echo "  2. Copy ~/.zshrc.local from old machine (NPM_TOKEN, secrets)"
 echo ""
