@@ -1,8 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(/Users/arthurmehmetoglu/.claude/plugins/cache/claude-code-plugins/ralph-wiggum/1.0.0/scripts/setup-ralph-loop.sh:*)",
-      "Bash(\"/Users/arthurmehmetoglu/.claude/plugins/cache/claude-code-plugins/ralph-wiggum/1.0.0/scripts/setup-ralph-loop.sh\":*)"
+      "Bash(~/.claude/plugins/cache/claude-code-plugins/ralph-wiggum/1.0.0/scripts/setup-ralph-loop.sh:*)",
+      "Bash(\"~/.claude/plugins/cache/claude-code-plugins/ralph-wiggum/1.0.0/scripts/setup-ralph-loop.sh\":*)"
     ],
     "deny": [
       "Bash(rm :*)",
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/arthurmehmetoglu/.claude/hooks/track-cwd.sh"
+            "command": "~/.claude/hooks/track-cwd.sh"
           }
         ]
       },
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/arthurmehmetoglu/.claude/hooks/cleanup-firebase-log.sh"
+            "command": "~/.claude/hooks/cleanup-firebase-log.sh"
           }
         ]
       }
@@ -34,7 +34,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "/Users/arthurmehmetoglu/.claude/statusline-command.sh"
+    "command": "~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
     "ralph-wiggum@claude-code-plugins": true,

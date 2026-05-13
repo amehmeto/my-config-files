@@ -90,9 +90,7 @@ recolor() {
 
   # Apply color to iTerm2 tab
   IFS=';' read -r r g b <<< "$picked"
-  printf "\033]6;1;bg;red;brightness;%s\a" "$r"
-  printf "\033]6;1;bg;green;brightness;%s\a" "$g"
-  printf "\033]6;1;bg;blue;brightness;%s\a" "$b"
+  printf '\e]1337;SetColors=tab=%02x%02x%02x\a' "$r" "$g" "$b"
 }
 
 alias rc='recolor'
