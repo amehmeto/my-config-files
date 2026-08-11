@@ -1,8 +1,10 @@
-# iTerm2 tab color randomizer
+# Tab color randomizer (iTerm2 + cmux)
 # Picks a random color ensuring visual distinction from the last 3 used
+# - iTerm2: colors the tab via the proprietary SetColors escape sequence
+# - cmux:   colors the workspace via `cmux workspace-action set-color`
 # Usage: `rc` to re-roll the tab color on the fly
 
-_iterm_colors=(
+_tab_colors=(
   "150;90;90"    # coral
   "80;120;85"    # green
   "70;100;145"   # blue
@@ -35,32 +37,43 @@ _iterm_colors=(
   "140;120;110"  # beige
 )
 
-_iterm_history_file="$HOME/.iterm_color_history"
+_tab_color_history_file="$HOME/.iterm_color_history"
 
 # Minimum squared RGB distance to consider two colors "distinct"
 # ~60 in Euclidean RGB space — filters out close pairs like coral/salmon
-_iterm_min_dist_sq=3600
+_tab_color_min_dist_sq=3600
+
+_apply_tab_color() {
+  local r g b
+  IFS=';' read -r r g b <<< "$1"
+  if [[ -n "$CMUX_WORKSPACE_ID" ]]; then
+    CMUX_QUIET=1 cmux workspace-action --action set-color \
+      --color "$(printf '#%02x%02x%02x' "$r" "$g" "$b")" >/dev/null 2>&1
+  elif [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+    printf '\e]1337;SetColors=tab=%02x%02x%02x\a' "$r" "$g" "$b"
+  fi
+}
 
 recolor() {
   local -a recent=() candidates=()
   local cr cg cb pr pg pb dr dg db distinct
-  local i pick picked tmp r g b
+  local i pick picked tmp
 
   # Load recent colors from history
-  if [[ -f "$_iterm_history_file" ]]; then
+  if [[ -f "$_tab_color_history_file" ]]; then
     while IFS= read -r line; do
       [[ -n "$line" ]] && recent+=("$line")
-    done < "$_iterm_history_file"
+    done < "$_tab_color_history_file"
   fi
 
   # Build list of candidate indices that are distinct from all recent colors
-  for (( i = 1; i <= ${#_iterm_colors[@]}; i++ )); do
+  for (( i = 1; i <= ${#_tab_colors[@]}; i++ )); do
     distinct=1
-    IFS=';' read -r cr cg cb <<< "${_iterm_colors[$i]}"
+    IFS=';' read -r cr cg cb <<< "${_tab_colors[$i]}"
     for past in "${recent[@]}"; do
       IFS=';' read -r pr pg pb <<< "$past"
       dr=$((cr - pr)) dg=$((cg - pg)) db=$((cb - pb))
-      if (( dr * dr + dg * dg + db * db < _iterm_min_dist_sq )); then
+      if (( dr * dr + dg * dg + db * db < _tab_color_min_dist_sq )); then
         distinct=0
         break
       fi
@@ -71,7 +84,7 @@ recolor() {
   # Fallback: if too few distinct candidates, use the full palette
   if (( ${#candidates[@]} < 5 )); then
     candidates=()
-    for (( i = 1; i <= ${#_iterm_colors[@]}; i++ )); do
+    for (( i = 1; i <= ${#_tab_colors[@]}; i++ )); do
       candidates+=($i)
     done
   fi
@@ -81,19 +94,31 @@ recolor() {
     return 1
   fi
   pick=${candidates[$((RANDOM % ${#candidates[@]} + 1))]}
-  picked=${_iterm_colors[$pick]}
+  picked=${_tab_colors[$pick]}
 
   # Append to history and keep only the last 3
-  echo "$picked" >> "$_iterm_history_file"
-  tmp=$(tail -n 3 "$_iterm_history_file")
-  echo "$tmp" > "$_iterm_history_file"
+  echo "$picked" >> "$_tab_color_history_file"
+  tmp=$(tail -n 3 "$_tab_color_history_file")
+  echo "$tmp" > "$_tab_color_history_file"
 
-  # Apply color to iTerm2 tab
-  IFS=';' read -r r g b <<< "$picked"
-  printf '\e]1337;SetColors=tab=%02x%02x%02x\a' "$r" "$g" "$b"
+  _apply_tab_color "$picked"
 }
 
 alias rc='recolor'
 
+# In cmux, a workspace hosts several shells (splits/panes): only color it
+# if it has no color yet, so a new split doesn't re-roll the whole workspace.
+_cmux_workspace_has_color() {
+  local color
+  color=$(CMUX_QUIET=1 cmux list-workspaces --json --id-format uuids 2>/dev/null \
+    | jq -r --arg id "$CMUX_WORKSPACE_ID" \
+        '.workspaces[] | select(.id == $id) | .custom_color')
+  [[ -n "$color" && "$color" != "null" ]]
+}
+
 # Set tab color on shell startup
-recolor
+if [[ -n "$CMUX_WORKSPACE_ID" ]]; then
+  _cmux_workspace_has_color || recolor
+elif [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+  recolor
+fi
