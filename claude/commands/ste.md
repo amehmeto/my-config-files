@@ -24,6 +24,20 @@ La langue du message de l'utilisateur choisit la norme :
 - N'utilise ni argot, ni métaphore, ni tournure idiomatique, ni humour.
 - Écris `doit` / `must` pour une obligation. Écris `peut` / `can` pour une possibilité.
 
+## Anglicismes — les termes usuels du métier sont autorisés
+
+La norme cherche la clarté, pas la pureté de la langue. **Garde le terme anglais quand c'est celui que le lecteur emploie tous les jours.**
+
+- Autorisés, et préférés à une traduction : `commit`, `merge`, `rebase`, `build`, `fallback`, `throttle`, `lockfile`, `hash`, `pin`, `runner`, `linter`, `overlay`, `timeout`, `cache`, `patch`, `release`, `rollback`, `workflow`.
+- **Ne traduis jamais un terme technique par un mot français rare, calqué ou inventé.** Un faux ami produit un contresens, ce qui coûte plus cher qu'un anglicisme. Exemples réels à ne pas reproduire : *pacing* → « pacification », *fallback query* → « requête de repli ».
+- Si le mot français est aussi courant que l'anglais, prends le français : `fichier` et non *file*, `dépôt` et non *repo*, `branche` et non *branch*.
+- Dans le doute, écris le terme anglais et explique la chose en une phrase simple.
+
+Cette autorisation ne lève pas deux interdits, qui portent sur la **structure** et non sur le vocabulaire :
+
+- Pas de calque syntaxique : `de ton côté`, jamais `côté toi`.
+- Pas de faux mot français : `génuinement` n'existe pas.
+
 ## Ce qui ne change pas
 
 - Le contenu technique reste complet et exact. La norme change la forme, pas le fond.
