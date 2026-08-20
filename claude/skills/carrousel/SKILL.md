@@ -80,6 +80,11 @@ en silence.
 
 Réglages par défaut. Le profil peut les changer champ par champ.
 
+**Le profil est la source unique du registre.** S'il porte une section
+« registre d'écriture », c'est elle qui s'applique, telle quelle, et les réglages
+ci-dessous ne servent qu'à un projet qui n'en a pas. Un outil qui écrit pour le
+même projet — Pinax, par exemple — lit le même fichier : personne ne recopie.
+
 **A. Em-dash strictement interdit, aucune exception.** Virgule, point, deux-points ou
 parenthèse.
 
