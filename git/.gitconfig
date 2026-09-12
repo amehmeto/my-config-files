@@ -21,3 +21,12 @@
 	# Machine-specific config (credential helpers, work email, etc.).
 	# Not versioned — see README "Local secrets" section.
 	path = ~/.gitconfig.local
+[safe]
+	directory = /Users/amehmeto/actions-runner/_work/TiedSiren/TiedSiren
+	directory = /Users/amehmeto/actions-runner-tapdeck/_work/TapDeck/TapDeck
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential

@@ -194,6 +194,8 @@ mkdir -p "$HOME/.claude"
 symlink "$DOTFILES/claude/settings.json"  "$HOME/.claude/settings.json"
 symlink "$DOTFILES/claude/commands"       "$HOME/.claude/commands"
 symlink "$DOTFILES/claude/hooks"          "$HOME/.claude/hooks"
+symlink "$DOTFILES/claude/CLAUDE.md"      "$HOME/.claude/CLAUDE.md"
+symlink "$DOTFILES/claude/RTK.md"         "$HOME/.claude/RTK.md"
 
 # Personal scripts (~/bin)
 mkdir -p "$HOME/bin"
