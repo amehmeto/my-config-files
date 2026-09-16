@@ -2,8 +2,23 @@
 alias c="clear"
 
 # Claude Code
-alias cl="claude"
-alias clw="claude -w"
+alias bucc="brew upgrade claude-code"
+
+# Upgrade claude-code au plus 1×/jour, en background (ne bloque pas le lancement)
+_bucc_throttled() {
+  local stamp="${XDG_CACHE_HOME:-$HOME/.cache}/bucc-last-upgrade"
+  local now=$(date +%s)
+  local last=$([[ -f "$stamp" ]] && cat "$stamp" || echo 0)
+  if (( now - last >= 86400 )); then
+    mkdir -p "$(dirname "$stamp")" && echo "$now" > "$stamp"
+    (brew upgrade claude-code &>/dev/null &)
+  fi
+}
+# Un alias `cl`/`clw` pré-existant (oh-my-zsh, session) casserait le parsing
+# de la définition de fonction et avorterait tout le fichier → on désaliase d'abord.
+unalias cl clw 2>/dev/null
+cl() { _bucc_throttled; claude "$@"; }
+clw() { _bucc_throttled; claude -w "$@"; }
 
 # yarn aliases
 alias y="yarn"
@@ -46,6 +61,9 @@ alias ti="cd ~/Development/tied-siren-project/"
 alias tied="cd ~/Development/tied-siren-project/"
 alias acu="cd ~/Development/admin-ui-customer/"
 alias aco="cd ~/Development/admin-ui-component/"
+alias joba="cd ~/Development/Joba/"
+alias tieda="cd ~/Development/tied-siren-project/TiedSiren/"
+alias tiedw="cd ~/Development/tied-siren-project/tied-siren-web/"
 alias giveAccentsBack="defaults write -g ApplePressAndHoldEnabled -bool true"
 
 #Yann magic aliases
@@ -94,12 +112,12 @@ release-a() {
 #adb shortcuts
 alias adb-menu="adb shell input keyevent 82"
 alias adb-unlock="adb shell input keyevent KEYCODE_WAKEUP && adb shell input swipe 500 1500 500 500 && sleep 1 && adb shell input text 5068 && adb shell input keyevent KEYCODE_ENTER"
-alias adb-open-notif= "adb shell input swipe 0 0 0 1000"
+alias adb-open-notif="adb shell input swipe 0 0 0 1000"
 alias adb-close-notif="adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS"
 alias adb-back="adb shell input keyevent KEYCODE_BACK"
 
 alias s="speedtest"
-alias pcat="pygmentize -g -O style=lightbulb"
+alias pcat="pygmentize -g -O style=tango"
 
 # Prettier
 alias np="npm i --save-dev --save-exact prettier"
@@ -139,3 +157,28 @@ gacp() {
 }
 
 # Amazon Q CLI aliases removed due to fig not being installed
+
+# ---------------------------------------------------------------------------
+# TiedSiren co-founder standup viewer (Electron) — taper `teles` pour lancer
+# Telès = sirène mythologique grecque, « celle qui accomplit / mène à terme »
+# ---------------------------------------------------------------------------
+teles() {
+  # Usage:
+  #   teles                                      → open index (latest standups)
+  #   teles 2026-06-03                           → open the standup for that date
+  #   teles latest                               → open the latest standup
+  #   teles path/to/vault.html|.mdx|.md          → open any vault file in Telès.app
+  # Délègue à Teles/scripts/teles.sh (source de vérité partagée avec Raycast).
+  bash "$HOME/Development/tied-siren-project/Teles/scripts/teles.sh" "$@"
+}
+
+# ---------------------------------------------------------------------------
+# Pinax = πίναξ, la tablette peinte — l'atelier de carrousels TikTok
+# ---------------------------------------------------------------------------
+pinax() {
+  # Usage:
+  #   pinax          → ouvre l'atelier (build incrémental puis Electron)
+  #   pinax images   → ouvre le dossier des images de la bibliothèque
+  #   pinax sounds   → ouvre le dossier des sons
+  bash "$HOME/Development/tied-siren-project/Teles/scripts/pinax.sh" "$@"
+}
